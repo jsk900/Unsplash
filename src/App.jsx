@@ -9,6 +9,7 @@ import './App.css';
 const App = () => {
   const [data, setData] = useState({
     results: null,
+    totalPages: 0,
     loading: true,
     error: null,
   });
@@ -18,7 +19,6 @@ const App = () => {
   const [page, setPage] = useState(1);
 
   const inputRef = useRef();
-  const totalPagesRef = useRef();
 
   //Grab API KEY from environment variable
   const API_KEY = process.env.REACT_APP_API_KEY;
@@ -48,22 +48,28 @@ const App = () => {
   };
 
   useEffect(() => {
+    setData({
+      results: null,
+      totalPages: 0,
+      loading: true,
+      error: null,
+    });
     const fetchData = async () => {
       try {
         const response = await fetch(URL);
         const results = await response.json();
-        setData({ results, loading: false, error: null });
+        setData({
+          results,
+          totalPages: results.total_pages,
+          loading: false,
+          error: null,
+        });
       } catch (error) {
-        setData({ results: null, loading: false, error });
+        setData({ results: null, totalPages: 0, loading: false, error });
       }
     };
     fetchData();
   }, [URL]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  if (data.loading) return <p>Loading...</p>;
-  if (data.error) return <p>{data.error}</p>;
-
-  totalPagesRef.current = data.results.total_pages;
 
   return (
     <main>
@@ -73,12 +79,12 @@ const App = () => {
         changeHandler={changeHandler}
         submitHandler={submitHandler}
         page={page}
-        totalPagesRef={totalPagesRef.current}
+        totalPages={data.totalPages}
         nextPage={nextPage}
         prevPage={prevPage}
         search={search}
       />
-      <Content data={data} />
+      <Content data={data ? data : null} />
       <Footer />
     </main>
   );

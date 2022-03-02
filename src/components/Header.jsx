@@ -8,7 +8,7 @@ const Header = ({
   changeHandler,
   submitHandler,
   page,
-  totalPagesRef,
+  totalPages,
   nextPage,
   prevPage,
   search,
@@ -24,11 +24,11 @@ const Header = ({
       <h2>{search}</h2>
       <div className='pages'>
         <p>Page: {page}</p>
-        <p>Total Pages: {totalPagesRef}</p>
+        <p>Total Pages: {totalPages}</p>
       </div>
       <Buttons
         page={page}
-        totalPagesRef={totalPagesRef}
+        totalPagesRef={totalPages}
         nextPage={nextPage}
         prevPage={prevPage}
       />

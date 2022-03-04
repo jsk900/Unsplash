@@ -11,8 +11,7 @@ const Content = ({ data }) => {
     return (
       <section className='messages'>
         <p className='message-text'>
-          Opps something went wrong. Please contact Wojciech Urbanski, your
-          class Tutor.
+          Opps something went wrong. Please try again.
         </p>
       </section>
     );
